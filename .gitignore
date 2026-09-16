@@ -15,3 +15,6 @@ htmlcov/
 
 # 项目数据与会话目录
 .workbuddy/
+
+# 网盘同步时的临时下载目录
+.review-sync/
