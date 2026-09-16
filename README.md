@@ -40,14 +40,22 @@ game/            核心逻辑（不依赖 pygame，可无头测试）
 ui/              表现层（唯一使用 pygame 的地方）
   renderer.py    渲染
   input_handler.py  输入处理
-tests/           unittest 单元测试
-docs/            项目计划文档
+tests/           unittest 单元测试（含无头冒烟测试 test_smoke.py）
+scripts/         辅助脚本（生成预览图）
+docs/            项目计划与代码审查文档
 ```
 
 ## 运行测试
 
 ```bash
-python -m unittest discover -s tests -v
+python -m unittest discover -s tests -v      # 全部用例（含表现层无头冒烟）
+python -m coverage run --source=game,ui,main -m unittest discover -s tests
+python -m coverage report -m                 # 覆盖率报告
 ```
 
-详细设计见 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)。
+`tests/test_smoke.py` 通过 SDL `dummy` 驱动在无头环境下真实跑一遍
+「输入 → 状态机 → 渲染」，因此表现层与 `main.py` 的主循环逻辑同样被覆盖，
+不需要图形界面即可回归。
+
+详细设计见 [docs/PROJECT_PLAN.md](docs/PROJECT_PLAN.md)，
+v0.1 审查记录见 [docs/CODE_REVIEW_v0.1.md](docs/CODE_REVIEW_v0.1.md)。

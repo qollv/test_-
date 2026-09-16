@@ -53,6 +53,11 @@ class Renderer:
         # 字体缓存：懒加载，先占位为 None
         self._font_large: pygame.font.Font | None = None
         self._font_small: pygame.font.Font | None = None
+        # 半透明遮罩层尺寸固定，预先建好复用，避免每帧新建 Surface
+        self._overlay = pygame.Surface(
+            (config.WINDOW_WIDTH, config.WINDOW_HEIGHT)
+        )
+        self._overlay.set_alpha(OVERLAY_ALPHA)
 
     # ------------------------------------------------------------------ 字体
     def _get_font(self, size: int) -> pygame.font.Font:
@@ -197,13 +202,9 @@ class Renderer:
             # 运行中不叠加任何遮罩
             return
 
-        # 半透明遮罩覆盖整个游戏区
-        overlay = pygame.Surface(
-            (self._config.WINDOW_WIDTH, self._config.WINDOW_HEIGHT)
-        )
-        overlay.set_alpha(OVERLAY_ALPHA)
-        overlay.fill(COLOR_OVERLAY)
-        self._screen.blit(overlay, (0, 0))
+        # 半透明遮罩覆盖整个游戏区（Surface 复用，只重新填色）
+        self._overlay.fill(COLOR_OVERLAY)
+        self._screen.blit(self._overlay, (0, 0))
 
         if state == GameState.READY:
             self._draw_centered_text(TEXT_READY, FONT_SIZE_LARGE)

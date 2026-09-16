@@ -74,6 +74,13 @@ class Snake:
         False；当 pending_grow > 0 时蛇尾不动，撞到蛇尾算自撞，返回 True。
         蛇头自身也会移动，但 next_head 计算出的 pos 永远与当前蛇头不重合，
         故无需单独排除蛇头。
+
+        关于 pending_grow > 0 分支的可达性：在当前 GameCore.update() 的
+        顺序里（先判碰撞 → 再加 pending_grow → 再 step），每次判定前
+        pending_grow 恒为 0，因此该分支在完整对局中不会被触发。这里保留它，
+        是为了让 Snake 作为独立模块时语义自洽（调用方可以先 pending_grow = n
+        再连续 step），并由 tests/test_snake.py 直接覆盖。请勿据此假设
+        「吃食物的同时撞到蛇尾」存在——该场景在本作中不会发生。
         """
         if pos == self.body[-1] and self.pending_grow == 0:
             return False

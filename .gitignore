@@ -9,3 +9,9 @@ htmlcov/
 .idea/
 .vscode/
 .DS_Store
+
+# 系统回收站残留（勿提交）
+.Trash-*/
+
+# 项目数据与会话目录
+.workbuddy/

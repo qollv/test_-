@@ -139,15 +139,17 @@ poll_actions() -> list[Action]
 
 ## 六、验收清单（v0.1 完成的定义）
 
-- [ ] `python main.py` 可直接运行，窗口正常，无报错
-- [ ] 方向键转向，禁止 180° 掉头自杀
-- [ ] 吃食物蛇身 +1、分数 +10，食物重生且不落在蛇身上
-- [ ] 撞墙 / 撞自己 → GAME_OVER 并显示最终得分
-- [ ] 空格暂停、R 重开、Esc 退出
-- [ ] `python -m unittest discover tests` 全部通过，核心逻辑覆盖率 ≥ 80%
-- [ ] README 补全：安装依赖、启动方式、操作说明、目录结构
-- [ ] 代码检查：注释齐全、无裸数字、统一代码风格
-- [ ] 打 v0.1 tag 并推送 https://github.com/qollv/test_-.git
+> 状态：v0.1 全部达成（2026-09-16 验收，详见 docs/CODE_REVIEW_v0.1.md）。
+
+- [x] `python main.py` 可直接运行，窗口正常，无报错
+- [x] 方向键转向，禁止 180° 掉头自杀（含「同一格内连按两次」绕过尝试）
+- [x] 吃食物蛇身 +1、分数 +10，食物重生且不落在蛇身上
+- [x] 撞墙 / 撞自己 → GAME_OVER 并显示最终得分
+- [x] 空格暂停、R 重开、Esc 退出
+- [x] `python -m unittest discover tests` 全部通过，核心逻辑覆盖率 ≥ 80%（实测 96%+）
+- [x] README 补全：安装依赖、启动方式、操作说明、目录结构
+- [x] 代码检查：注释齐全、无裸数字、统一代码风格
+- [x] 打 v0.1 tag 并推送 https://github.com/qollv/test_-.git
 
 ## 七、运行方式
 

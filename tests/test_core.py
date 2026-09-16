@@ -36,6 +36,18 @@ class TestInitialState(CoreTestBase):
         self.assertIs(self.game.state, GameState.RUNNING)
         self.assertIs(self.game.snake.direction, Direction.UP)
 
+    def test_reverse_key_in_ready_does_not_start(self) -> None:
+        # 初始朝右，按 ← 属于 180° 掉头：既不能转向，也不能开局
+        self.game.handle(Action.TURN_LEFT)
+        self.assertIs(self.game.state, GameState.READY)
+        self.assertIs(self.game.snake.direction, Direction.RIGHT)
+
+    def test_same_direction_key_in_ready_starts(self) -> None:
+        # 按与初始方向相同的 → ：方向与现状一致，应当正常开局
+        self.game.handle(Action.TURN_RIGHT)
+        self.assertIs(self.game.state, GameState.RUNNING)
+        self.assertIs(self.game.snake.direction, Direction.RIGHT)
+
     def test_update_does_nothing_in_ready(self) -> None:
         head_before = self.game.snake.body[0]
         self.game.update()

@@ -117,8 +117,13 @@ class GameCore:
             return
 
         if self.state is GameState.READY:
-            # READY 下蛇还没有移动过，可以直接转向，同时开局；
-            # 与初始方向相同的按键会被 turn 拒绝，但游戏依然开始。
+            # READY 下按方向键即开局，但必须排除「反向键」：
+            # 蛇初始朝右时按 ← 属于 180° 掉头，此时不能开局，
+            # 否则会出现「玩家按左、蛇向右跑」的错觉。
+            if direction == self.snake.direction.opposite:
+                return
+            # 与当前方向相同的按键 turn() 会拒绝（返回 False），
+            # 但方向本来就是它，游戏照常开始。
             self.snake.turn(direction)
             self.state = GameState.RUNNING
         elif self.state is GameState.RUNNING:
