@@ -53,7 +53,13 @@ README 给出的 `python -m unittest discover -s tests -v` 仅覆盖 58%：
    `.gitignore` 未排除该目录。
 4. **可优化**：`renderer._draw_overlay` 每帧新建 720×520 Surface，可缓存复用（当前非瓶颈）。
 
-## 四、修复记录（v0.1.1，2026-09-16）
+## 四、复现环境
+
+- 隔离 venv：`/home/qhr/.workbuddy/binaries/python/envs/default`（pygame 2.6.1、coverage）
+- 无头运行：`SDL_VIDEODRIVER=dummy`
+- 注：`fc-list timed-out` 仅为告警，字体经 `match_font` 仍正常命中，不影响中文显示。
+
+## 五、修复记录（v0.1.1，2026-09-16）
 
 | 编号 | 处理 | 说明 |
 | --- | --- | --- |
@@ -66,9 +72,3 @@ README 给出的 `python -m unittest discover -s tests -v` 仅覆盖 58%：
 
 补充：新增 `MainLoopTest` 真实调用 `main()`（含用假时钟跑满多帧的用例），
 使 `main.py` 覆盖率从 0% 提升到 97%；整体覆盖率 96%。
-
-## 五、复现环境
-
-- 隔离 venv：`/home/qhr/.workbuddy/binaries/python/envs/default`（pygame 2.6.1、coverage）
-- 无头运行：`SDL_VIDEODRIVER=dummy`
-- 注：`fc-list timed-out` 仅为告警，字体经 `match_font` 仍正常命中，不影响中文显示。
